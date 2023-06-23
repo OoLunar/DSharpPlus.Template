@@ -1,6 +1,8 @@
 on:
   push:
 
+permissions: write-all
+
 jobs:
     new-template:
         name: Replace Variables
