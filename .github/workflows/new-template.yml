@@ -1,0 +1,14 @@
+on:
+  push:
+
+jobs:
+    new-template:
+        name: Replace Variables
+        runs-on: self-hosted
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Execute Script
+              run: tools/replace-variables.sh ${{ github.event.repository.name }}
+            - name: Remove Script
+              run: git push
