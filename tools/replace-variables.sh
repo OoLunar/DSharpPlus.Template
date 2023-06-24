@@ -3,7 +3,7 @@
 normalize_text() {
   local text="$1"
   # Remove special characters and replace with underscores
-  text=${text//[^[:alnum:].]/_}
+  text=${text//[^[:alnum:]\/.]/_}
   # Remove multiple consecutive underscores
   text=${text//__/_}
   # Remove leading and trailing underscores
@@ -47,12 +47,12 @@ REPOSITORY_DESCRIPTION="$2"
 find . -name "*@RepositoryName*" -exec bash -c 'mv "$1" "${1//@RepositoryName/$2}"' _ {} "$REPOSITORY_NAME" \;
 
 # Replace file contents with the repository variables
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryName/$(sanitize_variable "$REPOSITORY_NAME")/g" {} +
 find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryNameLower/$(sanitize_variable "$REPOSITORY_NAME_LOWER")/g" {} +
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryFullName/$(sanitize_variable "$REPOSITORY_FULL_NAME")/g" {} +
 find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryFullNameLower/$(sanitize_variable "$REPOSITORY_FULL_NAME_LOWER")/g" {} +
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryOwner/$(sanitize_variable "$REPOSITORY_OWNER")/g" {} +
 find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryOwnerLower/$(sanitize_variable "$REPOSITORY_OWNER_LOWER")/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryName/$(sanitize_variable "$REPOSITORY_NAME")/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryFullName/$(sanitize_variable "$REPOSITORY_FULL_NAME")/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryOwner/$(sanitize_variable "$REPOSITORY_OWNER")/g" {} +
 find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryDescription/$(sanitize_variable "$REPOSITORY_DESCRIPTION")/g" {} +
 
 # Look for unused variables

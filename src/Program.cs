@@ -7,14 +7,14 @@ using DSharpPlus;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using OoLunar.DSharpPlusTemplate.Events;
+using OoLunar.@RepositoryName.Events;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using DSharpPlus.CommandAll;
 using DSharpPlus.CommandAll.Parsers;
 
-namespace OoLunar.DSharpPlusTemplate
+namespace OoLunar.@RepositoryName
 {
     public sealed class Program
     {
@@ -26,7 +26,7 @@ namespace OoLunar.DSharpPlusTemplate
 #if DEBUG
                 .AddJsonFile("config.debug.json", true, true)
 #endif
-                .AddEnvironmentVariables("DSharpPlusTemplate_")
+                .AddEnvironmentVariables("@RepositoryName_")
                 .Build());
 
             services.AddSerilog((services, loggerConfiguration) =>

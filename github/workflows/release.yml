@@ -38,5 +38,5 @@ jobs:
           push: true
           build-args: VERSION=${{ steps.previoustag.outputs.tag }}
           tags: |
-            ghcr.io/oolunar_dsharpplus_template:latest
-            ghcr.io/oolunar_dsharpplus_template:${{ steps.previoustag.outputs.tag }}
+            ghcr.io/@RepositoryFullNameLower:latest
+            ghcr.io/@RepositoryFullNameLower:${{ steps.previoustag.outputs.tag }}

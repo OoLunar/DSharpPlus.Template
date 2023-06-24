@@ -1,3 +1,3 @@
-# DSharpPlusTemplate
+# @RepositoryName
 
 @RepositoryDescription

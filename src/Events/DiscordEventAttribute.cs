@@ -1,7 +1,7 @@
 using System;
 using DSharpPlus;
 
-namespace OoLunar.DSharpPlusTemplate.Events
+namespace OoLunar.@RepositoryName.Events
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
     public sealed class DiscordEventAttribute : Attribute
