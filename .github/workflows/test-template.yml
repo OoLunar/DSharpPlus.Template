@@ -13,7 +13,7 @@ env:
 
 jobs:
   build-commit:
-    name: Build Commit ${{ github.sha }}
+    name: Replace Variables on Commit ${{ github.sha }}
     runs-on: ubuntu-latest
     if: "!contains(format('{0} {1}', github.event.head_commit.message, github.event.pull_request.title), '[ci-skip]')"
     steps:
@@ -22,12 +22,11 @@ jobs:
       - name: Replace Variables
         run: tools/replace-variables.sh "${{ github.event.repository.name }}" "${{ github.event.repository.description }}"
       - name: Find unused variables
-        id: find_unused_variables
         continue-on-error: true
         run: grep -rFl --exclude-dir=tools --exclude-dir=.git "@" . && echo "Unused variables found." && exit 1
   test-commit:
-      name: Test Commit ${{ github.sha }}
-      runs-on: self-hosted
+      name: Build Commit ${{ github.sha }}
+      runs-on: ubuntu-latest
       needs: build-commit
       steps:
       - name: Setup .NET
