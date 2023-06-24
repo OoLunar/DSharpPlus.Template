@@ -17,7 +17,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="../res/config.json" CopyToOutputDirectory="Always" Condition="Exists('../res/config.json')" />
-    <None Include="../res/config.debug.json" CopyToOutputDirectory="Always" Condition="'$(Configuration)' == 'Debug' && Exists('../res/config.debug.json')" />
+    <None Include="../res/config.debug.json" CopyToOutputDirectory="Always" Condition="'$(Configuration)' == 'Debug' AND Exists('../res/config.debug.json')" />
     <EmbeddedResource Include="../LICENSE" />
     <EmbeddedResource Include="../README.md" />
   </ItemGroup>
