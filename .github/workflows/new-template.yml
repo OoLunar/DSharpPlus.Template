@@ -12,6 +12,6 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
             - name: Execute Script
-              run: tools/replace-variables.sh ${{ github.event.repository.name }}
+              run: tools/replace-variables.sh "${{ github.event.repository.name }}" "${{ github.event.repository.description }}"
             - name: Remove Script
               run: git push
