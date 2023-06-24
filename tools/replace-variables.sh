@@ -1,20 +1,6 @@
 #!/bin/bash
 
-normalize_text() {
-  local text="$1"
-  # Remove special characters and replace with underscores
-  text=${text//[^[:alnum:].]/_}
-  # Remove multiple consecutive underscores
-  text=${text//__/_}
-  # Remove leading and trailing underscores
-  text=${text/#_/}
-  text=${text/%_/}
-  # Convert to lowercase
-  text=${text,,}
-  echo "$text"
-}
-
-REPOSITORY_NAME=$(normalize_text "$1")
+REPOSITORY_NAME="${1//[^[:alnum:].]/}"
 REPOSITORY_DESCRIPTION=$2
 
 # Replace file names that contain @RepositoryName with the repository name
