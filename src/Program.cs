@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
 using DSharpPlus;
+using DSharpPlus.CommandAll;
+using DSharpPlus.CommandAll.Parsers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,8 +13,6 @@ using OoLunar.@RepositoryName.Events;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
-using DSharpPlus.CommandAll;
-using DSharpPlus.CommandAll.Parsers;
 
 namespace OoLunar.@RepositoryName
 {
