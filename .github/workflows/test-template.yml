@@ -5,6 +5,7 @@ on:
       - "DSharpPlusTemplate.sln"
       - "tools/replace-variables.sh"
       - ".github/workflows/test-template.yml"
+  workflow_dispatch:
 
 env:
   DOTNET_NOLOGO: 1
