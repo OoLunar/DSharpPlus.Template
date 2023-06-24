@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 
 normalize_text() {
   local text="$1"
