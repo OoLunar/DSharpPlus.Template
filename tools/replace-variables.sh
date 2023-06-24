@@ -14,6 +14,23 @@ normalize_text() {
   echo "$text"
 }
 
+sanitize_variable() {
+  local sanitized="$1"
+  # Escape special characters for sed
+  sanitized=${sanitized//\\/\\\\}   # Backslash
+  sanitized=${sanitized//&/\\&}     # Ampersand
+  sanitized=${sanitized//\//\\/}    # Slash
+  sanitized=${sanitized//\$/\\\$}   # Dollar sign
+  sanitized=${sanitized//\!/\\!}    # Exclamation mark
+  sanitized=${sanitized//\./\\\.}   # Period
+  sanitized=${sanitized//\*/\\\*}   # Asterisk
+  sanitized=${sanitized//\[/\\\[}   # Opening square bracket
+  sanitized=${sanitized//\]/\\\]}   # Closing square bracket
+  sanitized=${sanitized//\^/\\\^}   # Caret
+  sanitized=${sanitized//\$/\\\$}   # Dollar sign
+  echo "$sanitized"
+}
+
 # Parse owner and repository name from the first argument
 IFS='/' read -r REPOSITORY_OWNER REPOSITORY_NAME <<< "$1"
 
@@ -28,12 +45,12 @@ REPOSITORY_NAME_LOWER=$(normalize_text "$REPOSITORY_NAME")
 find . -name "*@RepositoryName*" -exec bash -c 'mv "$1" "${1//@RepositoryName/$2}"' _ {} "$REPOSITORY_NAME" \;
 
 # Replace file contents with the repository variables
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryName/$REPOSITORY_NAME/g" {} +
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryNameLower/$REPOSITORY_NAME_LOWER/g" {} +
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryFullName/$REPOSITORY_FULL_NAME/g" {} +
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryFullNameLower/$REPOSITORY_FULL_NAME_LOWER/g" {} +
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryOwner/$REPOSITORY_OWNER/g" {} +
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryOwnerLower/$REPOSITORY_OWNER_LOWER/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/$(sanitize_variable '@RepositoryName')/$REPOSITORY_NAME/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/$(sanitize_variable '@RepositoryNameLower')/$REPOSITORY_NAME_LOWER/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/$(sanitize_variable '@RepositoryFullName')/$REPOSITORY_FULL_NAME/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/$(sanitize_variable '@RepositoryFullNameLower')/$REPOSITORY_FULL_NAME_LOWER/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/$(sanitize_variable '@RepositoryOwner')/$REPOSITORY_OWNER/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/$(sanitize_variable '@RepositoryOwnerLower')/$REPOSITORY_OWNER_LOWER/g" {} +
 
 # Look for unused variables
 grep -rFl --exclude-dir=tools --exclude-dir=.git --exclude-dir=.github --exclude-dir=github "@" .
