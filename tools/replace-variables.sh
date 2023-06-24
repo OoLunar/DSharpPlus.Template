@@ -17,5 +17,5 @@ git add . > /dev/null
 git commit -m "[ci-skip] Replace variables." > /dev/null
 
 # Remove this script
-rm -rf .github/workflows/new-template.yml && mv .github/workflows/* .github/workflows/
+rm -rf .github/workflows/ && cp -rn github/ .github/ && rm -rf github/
 rm -rf tools/replace-variables.sh
