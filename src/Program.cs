@@ -9,12 +9,12 @@ using DSharpPlus.CommandAll.Parsers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using OoLunar.@RepositoryName.Events;
+using @RepositoryOwner.@RepositoryName.Events;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 
-namespace OoLunar.@RepositoryName
+namespace @RepositoryOwner.@RepositoryName
 {
     public sealed class Program
     {
