@@ -18,7 +18,7 @@ namespace OoLunar.@RepositoryName
 {
     public sealed class Program
     {
-        public static Task Main(string[] args)
+        public static async Task Main(string[] args)
         {
             IServiceCollection services = new ServiceCollection();
             services.AddSingleton(services => new ConfigurationBuilder()
@@ -110,6 +110,11 @@ namespace OoLunar.@RepositoryName
 
                 return shardedClient;
             });
+
+            IServiceProvider serviceProvider = services.BuildServiceProvider();
+            DiscordShardedClient discordShardedClient = serviceProvider.GetRequiredService<DiscordShardedClient>();
+            await discordShardedClient.StartAsync();
+            await Task.Delay(-1);
         }
     }
 }

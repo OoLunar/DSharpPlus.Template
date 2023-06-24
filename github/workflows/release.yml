@@ -30,11 +30,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner  }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Change string case
-        id: docker-tag
-        uses: ASzc/change-string-case-action@v5
-        with:
-          string: ${{ github.repository }}
       - name: Build and Push
         uses: docker/build-push-action@v2
         with:
@@ -43,5 +38,5 @@ jobs:
           push: true
           build-args: VERSION=${{ steps.previoustag.outputs.tag }}
           tags: |
-            ghcr.io/${{ steps.docker-tag.outputs.lowercase }}:latest
-            ghcr.io/${{ steps.docker-tag.outputs.lowercase }}:${{ steps.previoustag.outputs.tag }}
+            ghcr.io/@RepositoryFullNameLower:latest
+            ghcr.io/@RepositoryFullNameLower:${{ steps.previoustag.outputs.tag }}

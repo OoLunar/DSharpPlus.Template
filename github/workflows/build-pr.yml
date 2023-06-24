@@ -25,4 +25,4 @@ jobs:
       - name: Build Project
         run: dotnet build
       - name: Build Dockerfile
-        run: docker build -t ${{ github.event.repository.name }}:latest .
+        run: docker build -t @RepositoryNameLower:latest .

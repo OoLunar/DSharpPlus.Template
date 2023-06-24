@@ -1,14 +1,39 @@
 #!/bin/bash
 
-REPOSITORY_NAME="${1//[^[:alnum:].]/}"
-REPOSITORY_DESCRIPTION=$2
+normalize_text() {
+  local text="$1"
+  # Remove special characters and replace with underscores
+  text=${text//[^[:alnum:].]/_}
+  # Remove multiple consecutive underscores
+  text=${text//__/_}
+  # Remove leading and trailing underscores
+  text=${text/#_/}
+  text=${text/%_/}
+  # Convert to lowercase
+  text=${text,,}
+  echo "$text"
+}
+
+# Parse owner and repository name from the first argument
+IFS='/' read -r REPOSITORY_OWNER REPOSITORY_NAME <<< "$1"
+
+# Input variables
+REPOSITORY_FULL_NAME="$1"
+REPOSITORY_FULL_NAME_LOWER=$(normalize_text "$REPOSITORY_FULL_NAME")
+REPOSITORY_OWNER_LOWER=$(normalize_text "$REPOSITORY_OWNER")
+REPOSITORY_NAME="${REPOSITORY_NAME//[^[:alnum:].]/}"
+REPOSITORY_NAME_LOWER=$(normalize_text "$REPOSITORY_NAME")
 
 # Replace file names that contain @RepositoryName with the repository name
-find . -name "*\@RepositoryName*" -exec bash -c 'mv "$1" "${1/\@RepositoryName/$2}"' _ {} "$REPOSITORY_NAME" \;
+find . -name "*@RepositoryName*" -exec bash -c 'mv "$1" "${1//@RepositoryName/$2}"' _ {} "$REPOSITORY_NAME" \;
 
-# Replace file contents that contain @RepositoryName with the repository name
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/\@RepositoryName/$REPOSITORY_NAME/g" {} +
-find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/\@RepositoryDescription/$REPOSITORY_DESCRIPTION/g" {} +
+# Replace file contents with the repository variables
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryName/$REPOSITORY_NAME/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryNameLower/$REPOSITORY_NAME_LOWER/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryFullName/$REPOSITORY_FULL_NAME/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryFullNameLower/$REPOSITORY_FULL_NAME_LOWER/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryOwner/$REPOSITORY_OWNER/g" {} +
+find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryOwnerLower/$REPOSITORY_OWNER_LOWER/g" {} +
 
 # Look for unused variables
 grep -rFl --exclude-dir=tools --exclude-dir=.git --exclude-dir=.github --exclude-dir=github "@" .
