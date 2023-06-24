@@ -5,7 +5,7 @@ using System.Reflection;
 using DSharpPlus;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace OoLunar.@RepositoryName.Events
+namespace OoLunar.DSharpPlusTemplate.Events
 {
     public sealed class DiscordEventManager
     {

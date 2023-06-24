@@ -2,7 +2,7 @@ on:
   pull_request:
     paths:
       - "src/**"
-      - "@RepositoryName.sln"
+      - "DSharpPlusTemplate.sln"
 
 env:
   DOTNET_NOLOGO: 1
@@ -25,4 +25,4 @@ jobs:
       - name: Build Project
         run: dotnet build
       - name: Build Dockerfile
-        run: docker build -t @RepositoryNameLower:latest .
+        run: docker build -t DSharpPlusTemplateLower:latest .

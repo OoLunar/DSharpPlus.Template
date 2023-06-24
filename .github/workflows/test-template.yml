@@ -2,7 +2,7 @@ on:
   push:
     paths:
       - "src/**"
-      - "@RepositoryName.sln"
+      - "DSharpPlusTemplate.sln"
       - "tools/replace-variables.sh"
       - ".github/workflows/test-template.yml"
 

@@ -1,9 +1,9 @@
 version: "3.9"
 
 services:
-  @RepositoryNameLower:
+  DSharpPlusTemplateLower:
     build: .
-    #image: ghcr.io/@RepositoryFullNameLower:latest
+    #image: ghcr.io/oolunar_dsharpplus_template:latest
     restart: unless-stopped
     env_file: .env
     volumes:
