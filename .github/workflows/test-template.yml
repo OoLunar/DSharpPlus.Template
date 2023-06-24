@@ -3,6 +3,7 @@ on:
     paths:
       - "src/**"
       - "@RepositoryName.sln"
+      - "tools/replace-variables.sh"
       - ".github/workflows/test-template.yml"
 
 env:
@@ -24,7 +25,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: commit-${{ github.sha }}
+          name: ${{ github.event.repository.name }}-${{ github.sha }}.zip
           path: ${{ github.workspace }}
   test-commit:
       name: Test Commit ${{ github.sha }}
