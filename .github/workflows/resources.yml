@@ -8,6 +8,8 @@ on:
       - "tools/generate-assets.sh"
   workflow_dispatch:
 
+permissions: write-all
+
 jobs:
   build-pr:
     name: Regenerate Resource Files
