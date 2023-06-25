@@ -58,8 +58,7 @@ find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git
 ' {} +
 
 # Remove template files
-rm -rf res/logo* .github/workflows/ tools/replace-variables.sh > /dev/null
-cp -rnT github/ .github/ && rm -rf github/ > /dev/null
+rm -rf res/logo* tools/replace-variables.sh > /dev/null
 
 # Look for unused variables
 if grep -rFl --exclude-dir=tools --exclude-dir=.git --exclude-dir=.github --exclude-dir=github "@" .; then
