@@ -55,15 +55,15 @@ find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git
 find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryOwner/$(sanitize_variable "$REPOSITORY_OWNER")/g" {} +
 find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i "s/@RepositoryDescription/$(sanitize_variable "$REPOSITORY_DESCRIPTION")/g" {} +
 
+# Remove template icon files
+rm -rf res/logo* > /dev/null
+
 # Look for unused variables
 grep -rFl --exclude-dir=tools --exclude-dir=.git --exclude-dir=.github --exclude-dir=github "@" .
 if [ $? -eq 0 ]; then
     echo "ERROR: Unused variables found."
     exit 1
 fi
-
-# Remove template icon files
-rm -rf res/logo* > /dev/null
 
 # Add all files to git
 git config --global user.email "github-actions[bot]@users.noreply.github.com" > /dev/null
