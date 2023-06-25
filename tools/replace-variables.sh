@@ -62,6 +62,9 @@ if [ $? -eq 0 ]; then
     exit 1
 fi
 
+# Remove template icon files
+rm -rf res/logo* > /dev/null
+
 # Add all files to git
 git config --global user.email "github-actions[bot]@users.noreply.github.com" > /dev/null
 git config --global user.name "github-actions[bot]" > /dev/null
