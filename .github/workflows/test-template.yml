@@ -17,7 +17,7 @@ jobs:
   test-commit:
     name: Test Commit ${{ github.sha }}
     runs-on: self-hosted
-    if: "!contains(format('{0} {1}', github.event.head_commit.message, github.event.pull_request.title), '[ci-skip]')"
+    if: "!contains(format('{0} {1}', github.event.head_commit.message, github.event.pull_request.title), '[ci-skip]') && github.event.repository.name != 'DSharpPlus-Template'"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
