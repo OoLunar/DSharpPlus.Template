@@ -96,7 +96,7 @@ namespace @RepositoryOwner.@RepositoryName
                 IReadOnlyDictionary<int, CommandAllExtension> commandAllShards = await shardedClient.UseCommandAllAsync(new CommandAllConfiguration()
                 {
 #if DEBUG
-                    DebugGuildId = configuration.GetValue<ulong>("discord:debug_guild_id"),
+                    DebugGuildId = configuration.GetValue<ulong?>("discord:debug_guild_id"),
 #endif
                     PrefixParser = new PrefixParser(configuration.GetSection("discord:prefixes").Get<string[]>() ?? new[] { ">>" })
                 });
