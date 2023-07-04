@@ -8,8 +8,10 @@ on:
       - "tools/generate-assets.sh"
   workflow_dispatch:
 
+permissions: write-all
+
 jobs:
-  build-pr:
+  regenerate-assets:
     name: Regenerate Resource Files
     runs-on: self-hosted
     steps:
