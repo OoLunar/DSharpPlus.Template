@@ -29,11 +29,11 @@ namespace @RepositoryOwner.@RepositoryName
                 .AddEnvironmentVariables("@RepositoryName_")
                 .Build());
 
-            services.AddSerilog((services, loggerConfiguration) =>
+            services.AddLogging(loggerBuilder =>
             {
                 const string loggingFormat = "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u4}] {SourceContext}: {Message:lj}{NewLine}{Exception}";
-                IConfiguration configuration = services.GetRequiredService<IConfiguration>();
-                loggerConfiguration
+                IConfiguration configuration = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
+                LoggerConfiguration loggingConfiguration = new LoggerConfiguration()
                     .MinimumLevel.Is(configuration.GetValue("logging:level", LogEventLevel.Debug))
                     .WriteTo.Console(outputTemplate: loggingFormat, formatProvider: CultureInfo.InvariantCulture, theme: new AnsiConsoleTheme(new Dictionary<ConsoleThemeStyle, string>
                     {
@@ -69,8 +69,10 @@ namespace @RepositoryOwner.@RepositoryName
                         continue;
                     }
 
-                    loggerConfiguration.MinimumLevel.Override(logOverride.Key, logEventLevel);
+                    loggingConfiguration.MinimumLevel.Override(logOverride.Key, logEventLevel);
                 }
+
+                loggerBuilder.AddSerilog(loggingConfiguration.CreateLogger());
             });
 
             Assembly currentAssembly = typeof(Program).Assembly;
