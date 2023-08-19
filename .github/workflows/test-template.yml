@@ -1,10 +1,10 @@
 on:
   push:
     paths:
-      - "src/**"
-      - "DSharpPlusTemplate.sln"
-      - "tools/replace-variables.sh"
       - ".github/workflows/test-template.yml"
+      - "src/**"
+      - "tools/replace-variables.sh"
+      - "@RepositoryName.sln"
   workflow_dispatch:
 
 env:
