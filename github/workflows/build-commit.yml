@@ -3,8 +3,10 @@ name: Build Commit
 on:
   push:
     paths:
+      - ".github/workflows/build-commit.yml"
       - "src/**"
       - "@RepositoryName.sln"
+  workflow_dispatch:
 
 env:
   DOTNET_NOLOGO: 1

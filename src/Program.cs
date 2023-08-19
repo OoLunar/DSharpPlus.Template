@@ -18,6 +18,8 @@ namespace @RepositoryOwner.@RepositoryName
 {
     public sealed class Program
     {
+        private static readonly string[] _prefixes = new[] { ">>" };
+
         public static async Task Main(string[] args)
         {
             IServiceCollection services = new ServiceCollection();
@@ -100,7 +102,7 @@ namespace @RepositoryOwner.@RepositoryName
 #if DEBUG
                     DebugGuildId = configuration.GetValue<ulong?>("discord:debug_guild_id"),
 #endif
-                    PrefixParser = new PrefixParser(configuration.GetSection("discord:prefixes").Get<string[]>() ?? new[] { ">>" })
+                    PrefixParser = new PrefixParser(configuration.GetSection("discord:prefixes").Get<string[]>() ?? _prefixes)
                 });
 
                 foreach (CommandAllExtension commandAll in commandAllShards.Values)
