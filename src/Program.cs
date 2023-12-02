@@ -18,7 +18,7 @@ namespace @RepositoryOwner.@RepositoryName
 {
     public sealed class Program
     {
-        private static readonly string[] _prefixes = new[] { ">>" };
+        private static readonly string[] _prefixes = [">>"];
 
         public static async Task Main(string[] args)
         {
@@ -28,7 +28,7 @@ namespace @RepositoryOwner.@RepositoryName
 #if DEBUG
                 .AddJsonFile("config.debug.json", true, true)
 #endif
-                .AddEnvironmentVariables("@RepositoryName_")
+                .AddEnvironmentVariables("@RepositoryName__")
                 .Build());
 
             services.AddLogging(loggerBuilder =>
@@ -116,7 +116,7 @@ namespace @RepositoryOwner.@RepositoryName
             });
 
             IServiceProvider serviceProvider = services.BuildServiceProvider();
-            DiscordShardedClient discordShardedClient = serviceProvider.GetRequiredService<DiscordShardedClient>();
+            DiscordShardedClient discordShardedClient = await serviceProvider.GetRequiredService<Task<DiscordShardedClient>>();
             await discordShardedClient.StartAsync();
             await Task.Delay(-1);
         }
