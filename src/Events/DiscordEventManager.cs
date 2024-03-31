@@ -7,11 +7,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace @RepositoryOwner.@RepositoryName.Events
 {
-    public sealed class DiscordEventManager(IServiceProvider serviceProvider)
+    public sealed class DiscordEventManager
     {
         public DiscordIntents Intents { get; private set; }
-        private readonly IServiceProvider _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+        private readonly IServiceProvider _serviceProvider;
         private readonly List<MethodInfo> _eventHandlers = [];
+
+        public DiscordEventManager(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
 
         public void GatherEventHandlers(Assembly assembly)
         {

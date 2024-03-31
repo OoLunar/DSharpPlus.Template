@@ -1,13 +1,13 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
-using DSharpPlus.CommandAll.Attributes;
-using DSharpPlus.CommandAll.Commands;
+using DSharpPlus.Commands;
+using DSharpPlus.Commands.Trees.Attributes;
 
 namespace @RepositoryOwner.@RepositoryName.Commands
 {
-    public sealed class PingCommand : BaseCommand
+    public sealed class PingCommand
     {
         [Command("ping"), Description("Checks the current latency of the bot.")]
-        public static async Task ExecuteAsync(CommandContext context) => await context.ReplyAsync($"Pong! {context.Client.Ping}ms");
+        public static async ValueTask ExecuteAsync(CommandContext context) => await context.RespondAsync($"Pong! {context.Client.Ping}ms");
     }
 }

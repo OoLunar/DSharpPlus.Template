@@ -39,8 +39,10 @@ IFS='/' read -r REPOSITORY_OWNER REPOSITORY_NAME <<< "$1"
 REPOSITORY_FULL_NAME="$1"
 REPOSITORY_FULL_NAME_LOWER=$(normalize_text "$REPOSITORY_FULL_NAME")
 REPOSITORY_OWNER_LOWER=$(normalize_text "$REPOSITORY_OWNER")
+REPOSITORY_OWNER_CAMEL=${REPOSITORY_OWNER,}
 REPOSITORY_NAME="${REPOSITORY_NAME//[^[:alnum:].]/}"
 REPOSITORY_NAME_LOWER=$(normalize_text "$REPOSITORY_NAME")
+REPOSITORY_NAME_CAMEL=${REPOSITORY_NAME,}
 REPOSITORY_DESCRIPTION="$2"
 
 # Replace file names that contain @RepositoryName with the repository name
@@ -49,8 +51,10 @@ find . -name "*@RepositoryName*" -exec bash -c 'mv "$1" "${1//@RepositoryName/$2
 # Replace file contents with the repository variables
 find . -type f -not -path "./tools/replace-variables.sh" -and -not -path "./.git/*" -exec sed -i '
   s/@RepositoryNameLower/'"$(sanitize_variable "$REPOSITORY_NAME_LOWER")"'/g;
+  s/@RepositoryNameCamel/'"$(sanitize_variable "$REPOSITORY_NAME_CAMEL")"'/g;
   s/@RepositoryFullNameLower/'"$(sanitize_variable "$REPOSITORY_FULL_NAME_LOWER")"'/g;
   s/@RepositoryOwnerLower/'"$(sanitize_variable "$REPOSITORY_OWNER_LOWER")"'/g;
+  s/@RepositoryOwnerCamel/'"$(sanitize_variable "$REPOSITORY_OWNER_CAMEL")"'/g;
   s/@RepositoryName/'"$(sanitize_variable "$REPOSITORY_NAME")"'/g;
   s/@RepositoryFullName/'"$(sanitize_variable "$REPOSITORY_FULL_NAME")"'/g;
   s/@RepositoryOwner/'"$(sanitize_variable "$REPOSITORY_OWNER")"'/g;
