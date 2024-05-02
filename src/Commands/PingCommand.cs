@@ -1,7 +1,6 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
 using DSharpPlus.Commands;
-using DSharpPlus.Commands.Trees.Attributes;
 
 namespace @RepositoryOwner.@RepositoryName.Commands
 {
